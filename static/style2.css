@@ -239,7 +239,7 @@ section .header:before {
 .content h2 {
   font-family: "ff-spinoza-web-pro";
   font-weight: 700;
-  font-size: 42px;
+  font-size: 30px;
   line-height: 48px;
 }
 
@@ -295,6 +295,15 @@ section .header:before {
   max-width: 600px;
 }
 
+.guide p {
+  font-family: "ff-spinoza-web-pro";
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.4;
+  color: #444;
+  max-width: 600px;
+}
+
 .content .meta {
   /* regular weissenhof */
   font-family: WeissenhofGrotesk;
@@ -326,7 +335,7 @@ section .header:before {
 .place img {
   width: 100%;
   min-height: 80px;
-  max-height: 200px;
+  max-height: 400px;
   background: #444;
 
   -moz-transition: all 0.35s;
@@ -638,7 +647,7 @@ section .header .content p {
   padding-left: 24px;
   position: relative;
 }
-
+body { font-size: 50%; }
 .rsvp .event-rsvp input[type="checkbox"],
 .rsvp .party-members input[type="checkbox"] {
   position: absolute;
