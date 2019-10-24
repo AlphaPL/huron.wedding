@@ -32,7 +32,7 @@ app.get('/emoji', (request, response) => {
   response.render('emoji.html.ejs', { emoji: require('./emoji') })
 })
 
-app.get('/:emoji', async (request, response) => {
+app.get('/rsvp', async (request, response) => {
   const emoji = request.params.emoji
 
   // Enable the below to collect addresses
