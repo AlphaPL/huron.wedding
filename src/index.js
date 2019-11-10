@@ -20,21 +20,8 @@ app.use(compression())
 app.use(express.static(__dirname + '/../static', { maxAge: 3600 }))
 app.use(bodyParser.urlencoded({ extended: true }))
 
-app.get('/', (request, response) => {
-  response.render('index.html.ejs')
-})
-
-app.get('/full', (request, response) => {
-  return response.redirect(303, '/')
-})
-
-app.get('/emoji', (request, response) => {
-  response.render('emoji.html.ejs', { emoji: require('./emoji') })
-})
-
 app.get('/rsvp', async (request, response) => {
-  const emoji = request.params.emoji
-
+  const emoji = request.query.emoji
   // Enable the below to collect addresses
   // const { rows } = await pgQuery(
   //   'SELECT firstname, partyname, addressprovidedtime FROM invitees WHERE emoji = $1::text',
@@ -55,28 +42,35 @@ app.get('/rsvp', async (request, response) => {
     'SELECT firstname, lastname, partyname, rsvptime FROM invitees WHERE emoji = $1::text',
     [ emoji ]
   )
-  if (rows.length === 0) {
-    return response.redirect(303, '/')
-  }
   const { firstname, lastname, partyname, rsvptime } = rows[0]
   response.render('rsvp.html.ejs', { firstname, lastname, partyname, emoji, rows, rsvptime })
 })
 
-app.post('/:emoji/rsvp', async (request, response) => {
-  const emoji = request.params.emoji
+app.get('/', (request, response) => {
+  response.render('index.html.ejs')
+})
 
+app.get('/full', (request, response) => {
+  return response.redirect(303, '/')
+})
+
+app.get('/emoji', (request, response) => {
+  response.render('emoji.html.ejs', { emoji: require('./emoji') })
+})
+
+
+
+app.post('/:emoji/rsvp/', async (request, response) => {
+  const emoji = request.params.emoji
   const rsvp = request.body.attending === 'no' ? {
     attending: false,
     message: trim(request.body.noMessage),
   } : {
     attending: true,
-    party: request.body.party && Object.keys(request.body.party),
+    kids: request.body.kids,
     plusOne: trim(request.body.plusOne),
-    earlyBird: Boolean(request.body.earlyBird),
-    formalFeast: Boolean(request.body.formalFeast),
-    poolParty: Boolean(request.body.poolParty),
-    ceremony: Boolean(request.body.ceremony),
-    kids: trim(request.body.kids),
+    normaldiet: (request.body.normal),
+    vege: (request.body.vege),
     diet: trim(request.body.diet),
     message: trim(request.body.yesMessage),
   }
@@ -85,7 +79,6 @@ app.post('/:emoji/rsvp', async (request, response) => {
     'UPDATE invitees SET rsvp = $2::json, rsvptime = now() WHERE emoji = $1::text',
     [ emoji, rsvp ]
   )
-
   response.redirect(303, '/')
 })
 
@@ -105,7 +98,7 @@ app.post('/:emoji/updateaddress', async (request, response) => {
   }
 
   const { rows } = await pgQuery(
-    'SELECT firstname, lastname, partyname, email FROM invitees WHERE emoji = $1::text',
+    'SELECT firstname, lastname, partyname, email FROM invitees WHERE partyname = $1::text',
     [ emoji ]
   )
   if (rows.length === 0) {
@@ -114,7 +107,7 @@ app.post('/:emoji/updateaddress', async (request, response) => {
   const { firstname, lastname, partyname, email } = rows[0]
 
   await pgQuery(
-    'UPDATE invitees SET address = $2::json, addressprovidedtime = now() WHERE emoji = $1::text',
+    'UPDATE invitees SET address = $2::json, addressprovidedtime = now() WHERE partyname = $1::text',
     [ emoji, address ]
   )
 
@@ -153,15 +146,6 @@ function trim(str) {
 
 function value(str) {
   return str || ''
-}
-
-function validateForm(form) {
-  return (
-    value(form.address).length >= 3 &&
-    value(form.city).length >= 2 &&
-    value(form.state).length >= 2 &&
-    /^\s*[0-9-]{3,}\s*$/.test(value(form.zip))
-  )
 }
 
 // 404

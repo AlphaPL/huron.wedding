@@ -13,19 +13,19 @@ let _pool
 
 function pool() {
   if (!_pool) {
-    const params = urlParse(process.env.DATABASE_URL)
-    const auth = params.auth.split(':')
     _pool = new Pool({
-      user: auth[0],
-      password: auth[1],
-      host: params.hostname,
-      port: params.port,
-      database: params.pathname.split('/')[1],
+      user: 'wuwhqznnkmralr',
+      password: '4fe4fdd8baa38c5658777ac826f2cb9a2ca3f1188cdb3070536709e2d5801adc',
+      host: 'ec2-46-137-91-216.eu-west-1.compute.amazonaws.com',
+      port: 5432,
+      database: 'dek4gonrblmfv3',
       ssl: true
     })
   }
+  console.log(_pool)
   return _pool
 }
+
 
 function pgQuery(str, args) {
   return pool().connect().then(client =>
