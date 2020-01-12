@@ -108,6 +108,36 @@ let todos = [
     `insert into invitees (emoji, rsvp, rsvptime) values ($1, $2, $3)`,
     [ emoji, rsvp, new Date()]
   )
+
+var nodemailer = require('nodemailer');
+var transporter = nodemailer.createTransport({
+ service: 'Gmail',
+ auth: {
+        user: 'kingusiaaruswedding@gmail.com',
+        pass: 'wedding95'
+    }
+});
+var resp = ""
+resp += "Czy przybedzie = "+rsvp.attending 
+resp += " . Czy chce pokoj w palace = "+ rsvp.kids 
+resp += " . Czy chce vegetarianska diete = "+rsvp.vege 
+resp += ". Czy chce normalna diete = "+rsvp.normaldiet 
+resp += ". Osoba towarzyszaca = "+rsvp.plusOne 
+resp += ". Alergie = "+rsvp.diet 
+resp += ". Wiadomosc dla nas = "+rsvp.message  
+
+const mailOptions = {
+  from: 'kingusiaaruswedding@gmail.com', // sender address
+  to: 'arkadiusz.krawczyk.1993@gmail.com,kinswi1995@o2.pl', // list of receivers
+  subject: 'Wedding update', // Subject line
+  html: emoji + ' wypelnil formularz! Jej odpowiedzi -  . ' + resp // plain text body
+};
+transporter.sendMail(mailOptions, function (err, info) {
+   if(err)
+     console.log(err)
+   else
+     console.log(info);
+});
   response.redirect(303, '/thank-you-pl')
 })
 
