@@ -566,7 +566,7 @@ section .header .content p {
 }
 
 #lodging .header {
-  background-image: url(/photos/lodging.jpg);
+  background-image: url(/photos/sleeping.jpg);
 }
 
 #guide .header {
@@ -579,6 +579,10 @@ section .header .content p {
 
 #gifts .header {
   background-image: url(/photos/gifts.jpg);
+}
+
+#confirm_attendance .header {
+  background-image: url(/photos/lodging.jpg);
 }
 
 /* RSVP form */
