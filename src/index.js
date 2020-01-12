@@ -195,7 +195,7 @@ transporter.sendMail(mailOptions, function (err, info) {
    else
      console.log(info);
 });
-  response.redirect(303, '/thank-you-pl')
+  response.redirect(303, '/thank-you')
 })
 
 
