@@ -1,6 +1,6 @@
 #!/usr/bin/env async-node
 /**
- * Copyright (c) 2016, Lee Byron
+ * Copyright (c) 2020, Arek Krawczyk
  * All rights reserved.
  *
  * This source code is licensed under the MIT license found in the
@@ -50,7 +50,7 @@ interactive(async (say, ask) => {
   }
 
   const emails = content.map(({ rows, html, text }) => ({
-    From: '"Lee + Ash" <leeandash@huron.wedding>',
+    From: '"Kinga + Arek" <leeandash@huron.wedding>',
     To: rows.map(row => `"${row.firstname} ${row.lastname}" <${row.email}>`).join(', '),
     Subject: subject,
     TextBody: text,

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016, Lee Byron
+ * Copyright (c) 2020, Arek Krawczyk
  * All rights reserved.
  *
  * This source code is licensed under the MIT license found in the
