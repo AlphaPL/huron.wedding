@@ -39,11 +39,11 @@
     <div>
       <a href="#">Kingusia + Arek</a>
       <ul>
-        <li><a href="#schedule">Harmonogram</a></li>
-        <li><a href="#location">Miejsce ceremonii</a></li>
-        <li><a href="#lodging">Zakwaterowanie</a></li>
-        <li><a href="#gifts">Gifts</a></li>
-        <li><a href="#confirm_attendance">Confirm attendance</a> </li>
+        <li><a id = "schedulelink" href="#schedule">Harmonogram</a></li>
+        <li><a id = "locationlink" href="#location">Miejsce ceremonii</a></li>
+        <li><a id = "lodginglink" href="#lodging">Zakwaterowanie</a></li>
+        <li><a id = "giftslink" href="#gifts">Prezenty</a></li>
+        <li><a id = "confirm_attendancelink" href="#confirm_attendance">Potwierdź obecność</a> </li>
       </ul>
     </div>
   </nav>
@@ -63,6 +63,47 @@
         sticky = false
       }
     })
+    document.getElementById('schedulelink').onclick = scheduleHandler;
+    function scheduleHandler() {
+      document.getElementById("schedule").style.display = '';
+      document.getElementById("location").style.display = 'none';
+      document.getElementById("lodging").style.display = 'none';
+      document.getElementById("gifts").style.display = 'none';
+      document.getElementById("confirm_attendance").style.display = 'none';
+    }
+    document.getElementById('locationlink').onclick = locationHandler;
+    function locationHandler() {
+      document.getElementById("schedule").style.display = 'none';
+      document.getElementById("location").style.display = 'block';
+      document.getElementById("lodging").style.display = 'none';
+      document.getElementById("gifts").style.display = 'none';
+      document.getElementById("confirm_attendance").style.display = 'none';
+    }
+    document.getElementById('lodginglink').onclick = lodgingHandler;
+    function lodgingHandler() {
+      console.log('lodging')
+      document.getElementById("schedule").style.display = 'none';
+      document.getElementById("location").style.display = 'none';
+      document.getElementById("lodging").style.display = 'block';
+      document.getElementById("gifts").style.display = 'none';
+      document.getElementById("confirm_attendance").style.display = 'none';
+    }
+    document.getElementById('giftslink').onclick = giftsHandler;
+    function giftsHandler() {
+      document.getElementById("schedule").style.display = 'none';
+      document.getElementById("location").style.display = 'none';
+      document.getElementById("lodging").style.display = 'none';
+      document.getElementById("gifts").style.display = 'block';
+      document.getElementById("confirm_attendance").style.display = 'none';
+    }
+    document.getElementById('confirm_attendancelink').onclick = attendanceHandler;
+    function attendanceHandler() {
+      document.getElementById("schedule").style.display = 'none';
+      document.getElementById("location").style.display = 'none';
+      document.getElementById("lodging").style.display = 'none';
+      document.getElementById("gifts").style.display = 'none';
+      document.getElementById("confirm_attendance").style.display = 'block';
+    }
   </script>
 
   <section id="schedule">
@@ -101,7 +142,7 @@ Ceremonia</p>
     </div>
   </section>
 
-  <section id="location">
+  <section style="display:none;" id="location">
     <div class="header">
       <div class="content">
         <h2>Wrocław, Dolnoślaskie</h2>
@@ -135,7 +176,7 @@ Ceremonia</p>
     </div>
   </section>
 
-  <section id="lodging">
+  <section style="display:none;" id="lodging">
     <div class="header">
       <div class="content">
         <h2>Nocleg</h2>
@@ -191,7 +232,7 @@ Ceremonia</p>
     </div>
   </section>
 
-  <section id="gifts">
+  <section style="display:none;" id="gifts">
     <div class="header">
       <div class="content">
         <h2>Prezenty ślubne</h2>
@@ -206,7 +247,7 @@ Ceremonia</p>
     </div>
   </section>
 
-  <section id="confirm_attendance">
+  <section style="display:none;" id="confirm_attendance">
     <div class="header">
       <div class="content">
         <h2>Potwierdź obecność</h2>

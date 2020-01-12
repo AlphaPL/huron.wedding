@@ -40,13 +40,12 @@
     <div>
       <a href="#">Kingusia + Arek</a>
       <ul>
-        <li><a href="#schedule">Schedule</a></li>
-        <li><a href="#location">Location</a></li>
-        <li><a href="#lodging">Lodging</a></li>
-        <li><a href="#guide">Guide</a></li>
-        <li><a href="#gifts">Gifts</a></li>
-        <li><a href="#gifts">Gifts</a></li>
-        <li><a href="#confirm_attendance">Confirm attendance</a> </li>
+        <li><a id = "schedulelink" href="#schedule">Schedule</a></li>
+        <li><a id = "locationlink" href="#location">Location</a></li>
+        <li><a id = "lodginglink" href="#lodging">Lodging</a></li>
+        <li><a id = "guidelink" href="#guide">Guide</a></li>
+        <li><a id = "giftslink" href="#gifts">Gifts</a></li>
+        <li><a id = "confirm_attendancelink" href="#confirm_attendance">Confirm attendance</a> </li>
       </ul>
     </div>
   </nav>
@@ -66,6 +65,62 @@
         sticky = false
       }
     })
+
+    document.getElementById('schedulelink').onclick = scheduleHandler;
+    function scheduleHandler() {
+      document.getElementById("schedule").style.display = '';
+      document.getElementById("location").style.display = 'none';
+      document.getElementById("lodging").style.display = 'none';
+      document.getElementById("guide").style.display = 'none';
+      document.getElementById("gifts").style.display = 'none';
+      document.getElementById("confirm_attendance").style.display = 'none';
+    }
+    document.getElementById('locationlink').onclick = locationHandler;
+    function locationHandler() {
+      document.getElementById("schedule").style.display = 'none';
+      document.getElementById("location").style.display = 'block';
+      document.getElementById("lodging").style.display = 'none';
+      document.getElementById("guide").style.display = 'none';
+      document.getElementById("gifts").style.display = 'none';
+      document.getElementById("confirm_attendance").style.display = 'none';
+    }
+    document.getElementById('lodginglink').onclick = lodgingHandler;
+    function lodgingHandler() {
+      console.log('lodging')
+      document.getElementById("schedule").style.display = 'none';
+      document.getElementById("location").style.display = 'none';
+      document.getElementById("lodging").style.display = 'block';
+      document.getElementById("guide").style.display = 'none';
+      document.getElementById("gifts").style.display = 'none';
+      document.getElementById("confirm_attendance").style.display = 'none';
+    }
+    document.getElementById('guidelink').onclick = guideHandler;
+    function guideHandler() {
+      document.getElementById("schedule").style.display = 'none';
+      document.getElementById("location").style.display = 'none';
+      document.getElementById("lodging").style.display = 'none';
+      document.getElementById("guide").style.display = 'block';
+      document.getElementById("gifts").style.display = 'none';
+      document.getElementById("confirm_attendance").style.display = 'none';
+    }
+    document.getElementById('giftslink').onclick = giftsHandler;
+    function giftsHandler() {
+      document.getElementById("schedule").style.display = 'none';
+      document.getElementById("location").style.display = 'none';
+      document.getElementById("lodging").style.display = 'none';
+      document.getElementById("guide").style.display = 'none';
+      document.getElementById("gifts").style.display = 'block';
+      document.getElementById("confirm_attendance").style.display = 'none';
+    }
+    document.getElementById('confirm_attendancelink').onclick = attendanceHandler;
+    function attendanceHandler() {
+      document.getElementById("schedule").style.display = 'none';
+      document.getElementById("location").style.display = 'none';
+      document.getElementById("lodging").style.display = 'none';
+      document.getElementById("guide").style.display = 'none';
+      document.getElementById("gifts").style.display = 'none';
+      document.getElementById("confirm_attendance").style.display = 'block';
+    }
   </script>
 
   <section id="schedule">
@@ -104,7 +159,7 @@ Marriage ceremony</p>
     </div>
   </section>
 
-  <section id="location">
+  <section style="display:none;" id="location">
     <div class="header">
       <div class="content">
         <h2>Wrocław, Dolnoślaskie</h2>
@@ -154,7 +209,7 @@ Wrocław is the historic capital of Silesia and it has changed hands repeatedly 
     </div>
   </section>
 
-  <section id="lodging">
+  <section style="display:none;" id="lodging">
     <div class="header">
       <div class="content">
         <h2>Stay With Us</h2>
@@ -211,7 +266,7 @@ Wrocław is the historic capital of Silesia and it has changed hands repeatedly 
     </div>
   </section>
 
-  <section id="guide">
+  <section style="display:none;" id="guide">
     <div class="header">
       <div class="content">
         <h2>Travel Guide</h2>
@@ -228,7 +283,7 @@ Wrocław is the historic capital of Silesia and it has changed hands repeatedly 
     </div>
   </section>
 
-  <section id="gifts">
+  <section style="display:none;" id="gifts">
     <div class="header">
       <div class="content">
         <h2>Wedding gifts</h2>
@@ -243,7 +298,7 @@ Wrocław is the historic capital of Silesia and it has changed hands repeatedly 
     </div>
   </section>
 
-  <section id="confirm_attendance">
+  <section style="display:none;" id="confirm_attendance">
     <div class="header">
       <div class="content">
         <h2>Confirm attendance</h2>
