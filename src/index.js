@@ -38,12 +38,27 @@ app.get('/rsvp', async (request, response) => {
   // }
 
   // Enable the below to collect RSVPs
-  const { rows } = await pgQuery(
-    'SELECT firstname, lastname, partyname, rsvptime FROM invitees WHERE emoji = $1::text',
-    [ emoji ]
-  )
-  const { firstname, lastname, partyname, rsvptime } = rows[0]
-  response.render('rsvp.html.ejs', { firstname, lastname, partyname, emoji, rows, rsvptime })
+  response.render('rsvp.html.ejs', {  emoji })
+})
+
+app.get('/rsvp-pl', async (request, response) => {
+  const emoji = request.query.emoji
+  // Enable the below to collect addresses
+  // const { rows } = await pgQuery(
+  //   'SELECT firstname, partyname, addressprovidedtime FROM invitees WHERE emoji = $1::text',
+  //   [ emoji ]
+  // )
+  // if (rows.length === 0) {
+  //   return response.redirect(303, '/')
+  // }
+  // const { firstname, partyname, addressprovidedtime } = rows[0]
+  // if (addressprovidedtime) {
+  //   response.render('thanks.html.ejs', { firstname, partyname })
+  // } else {
+  //   response.render('form.html.ejs', { firstname, partyname, emoji })
+  // }
+
+  response.render('rsvp-pl.html.ejs', { emoji})
 })
 
 app.get('/', (request, response) => {
@@ -54,8 +69,46 @@ app.get('/full', (request, response) => {
   return response.redirect(303, '/')
 })
 
+app.get('/thank-you', (request, response) => {
+  response.render('thanks.html.ejs')
+})
+
+app.get('/thank-you-pl', (request, response) => {
+  response.render('thanks-pl.html.ejs')
+})
+
+app.get('/index-pl', (request, response) => {
+  response.render('index-pl.html.ejs')
+})
+
 app.get('/emoji', (request, response) => {
   response.render('emoji.html.ejs', { emoji: require('./emoji') })
+})
+
+app.post('/:emoji/rsvp-pl/', async (request, response) => {
+  const emoji = request.params.emoji
+  const rsvp = request.body.attending === 'no' ? {
+    attending: false,
+    message: trim(request.body.noMessage),
+  } : {
+    attending: true,
+    kids: request.body.kids,
+    plusOne: trim(request.body.plusOne),
+    normaldiet: (request.body.normal),
+    vege: (request.body.vege),
+    diet: trim(request.body.diet),
+    message: trim(request.body.yesMessage),
+  }
+let stmt = `INSERT INTO todos(title,completed)  VALUES ?  `;
+let todos = [
+  ['Insert multiple rows at a time', false],
+  ['It should work perfectly', true]
+];
+  await pgQuery(
+    `insert into invitees (emoji, rsvp, rsvptime) values ($1, $2, $3)`,
+    [ emoji, rsvp, new Date()]
+  )
+  response.redirect(303, '/thank-you-pl')
 })
 
 
@@ -74,71 +127,19 @@ app.post('/:emoji/rsvp/', async (request, response) => {
     diet: trim(request.body.diet),
     message: trim(request.body.yesMessage),
   }
-
+let stmt = `INSERT INTO todos(title,completed)  VALUES ?  `;
+let todos = [
+  ['Insert multiple rows at a time', false],
+  ['It should work perfectly', true]
+];
   await pgQuery(
-    'UPDATE invitees SET rsvp = $2::json, rsvptime = now() WHERE emoji = $1::text',
-    [ emoji, rsvp ]
+    `insert into invitees (emoji, rsvp, rsvptime) values ($1, $2, $3)`,
+    [ emoji, rsvp, new Date()]
   )
-  response.redirect(303, '/')
+  response.redirect(303, '/thank-you')
 })
 
-app.post('/:emoji/updateaddress', async (request, response) => {
-  const emoji = request.params.emoji
 
-  const address = {
-    address: trim(request.body.address),
-    suite: trim(request.body.suite),
-    city: trim(request.body.city),
-    state: trim(request.body.state),
-    zip: trim(request.body.zip),
-  }
-
-  if (!validateForm(address)) {
-    return response.redirect(303, '/' + emoji)
-  }
-
-  const { rows } = await pgQuery(
-    'SELECT firstname, lastname, partyname, email FROM invitees WHERE partyname = $1::text',
-    [ emoji ]
-  )
-  if (rows.length === 0) {
-    return response.redirect(303, '/')
-  }
-  const { firstname, lastname, partyname, email } = rows[0]
-
-  await pgQuery(
-    'UPDATE invitees SET address = $2::json, addressprovidedtime = now() WHERE partyname = $1::text',
-    [ emoji, address ]
-  )
-
-  // Redirect right away, before sending email.
-  response.redirect(303, '/' + emoji)
-
-  const [ htmlBody, txtBody, ics ] = await Promise.all([
-    renderView('email/address-thanks.html.ejs', { firstname, partyname, emoji }),
-    renderView('email/address-thanks.txt.ejs', { firstname, partyname, emoji }),
-    renderView('email/save-the-date.ics.ejs', { rows }),
-  ])
-
-  const to = rows.filter(row => row.email).map(row =>
-    `"${row.firstname} ${row.lastname}" <${row.email}>`
-  ).join(', ')
-
-  await sendMail({
-    From: '"Lee + Ash" <leeandash@huron.wedding>',
-    To: to,
-    Subject: 'Thanks for your address!',
-    TextBody: txtBody,
-    HtmlBody: htmlBody,
-    Attachments: [ {
-      Name: 'lee-and-ash-save-the-date.ics',
-      ContentType: 'text/calendar',
-      Content: Buffer(ics).toString('base64')
-    } ],
-    Tag: 'save-the-date-thanks',
-    TrackOpens: true
-  })
-})
 
 function trim(str) {
   return str && str.trim() || null

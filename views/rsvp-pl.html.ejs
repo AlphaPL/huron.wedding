@@ -11,12 +11,12 @@
     <a href="/" target="_blank">
 
         <div>
-   <h1> Wedding of the century </h1>
-   <h1> Kingusia ❤️ Arek</h1>
-          <h3>16 May 2020</h3>
+   <h1> Ślub stulecia </h1>
+   <h1> Kinga ❤️ Arek</h1>
+          <h3>16 Maj 2020</h3>
           <h3>
             Hotel Platinum Palace<br />
-            Wroclaw<br />
+            Wrocław<br />
           </h3>
         </div>
       </div>
@@ -28,73 +28,75 @@
   <section>
     <div class="content">
 
-      <h4><%= emoji %>, will you join us on this special day?</h4>
+      <h4><%= emoji %>, czy dołaczysz do nas w tym wspaniałym dniu?</h4>
 
 
-      <form id="rsvp" method="post" action="/<%= emoji %>/rsvp">
+      <form id="rsvp" method="post" action="/<%= emoji %>/rsvp-pl">
 
         <input class="attending-radio" id="attending-yes" type="radio" name="attending" value="yes" onchange="updateAttendance(this.form)" />
         <label for="attending-yes">
-          I'll be there!
+          Będę tam!
         </label>
 
         <input class="attending-radio" type="radio" id="attending-no" name="attending" value="no" onchange="updateAttendance(this.form)" />
         <label for="attending-no">
-          Sadly, I can't attend.
+          Przepraszam, niestety nie mogę.
         </label>
 
         <div class="other-questions" id="attending-no-form" style="display: none;">
-          <h4>We're sorry to hear that.</h4>
-          <p>Hopefully we'll see each other another time soon.</p>
+          <h4>Przykro nam z tego powodu.</h4>
 
           <label>
-            Anything else?
-            <textarea name="noMessage" placeholder="Leave us a message!"></textarea>
+            Chcesz nam coś przekazać?
+            <textarea name="noMessage" placeholder="Zostaw nam wiadomość!"></textarea>
           </label>
         </div>
 
         <div class="other-questions" id="attending-yes-form" style="display: none;">
-          <h4>We can't wait to see you!</h4>
+          <h4>Nie możemy się doczekać Ciebie zobaczyć!</h4>
 
           <input type="hidden" name="party[emoji]" value="on" />
 
           <div class="event-rsvp">
 
-            <h3>Dinner menu</h3>
+            <h3>Które menu obiadowe preferujesz?</h3>
 
             <label>
               <input type="checkbox" name="normal" checked />
-              <h4>Non-Vegetarian</h4>
-              <p class="meta">Details to be determined.</p>
+              <h4>Normalne</h4>
+              <p class="meta">Opis</p>
             </label>
 
             <label>
               <input type="checkbox" name="vege" />
-              <h4>Vegetarian</h4>
-              <p class="meta">Details to be determined.</p>
+              <h4>Vegetarianskie</h4>
+              <p class="meta">Opis</p>
             </label>
           </div>
 
           <label>
-            Will you be bringing anyone?
-            <textarea name="plusOne" placeholder="Please include their full name."></textarea>
+            Planujesz przybyć z osoba towarzyszaca?
+            <textarea name="plusOne" placeholder="Imie osoby towarzyszacej."></textarea>
           </label>
           <label>
-            Do you want to reserve a room in this hotel? (350 PLN per night with our discounts, 10 rooms served on first come, first served basis. Let us know by 1st of April.)
+            Czy chcesz zarezerwować pokój w Platinum Palace? (350 PLN za noc z naszymi zniżkami, 10 pokoi obsługiwanych według kolejności zgłoszeń, kto pierwszy ten lepszy. Daj nam znać do 1 kwietnia.)
             <input type="checkbox" name="kids" />
 
           </label>
 
           <label>
-            Dietary restrictions?
-            <textarea name="diet" placeholder="Or food allergies? Or do you not drink alcohol?"></textarea>
+            Ograniczenia dietetyczne?
+            <textarea name="diet" placeholder="Czy cierpisz na alergie?"></textarea>
           </label>
 
           <label>
-            Anything else?
-            <textarea name="yesMessage" placeholder="Leave us a message!"></textarea>
+            Chcesz nam coś jeszcze przekazać?
+            <textarea name="yesMessage" placeholder="Przekaż nam wiadomość!"></textarea>
           </label>
         </div>
+
+        <input id="submit-button" type="submit" value="Wyślij nam odpowiedź." style="display: none;" />
+      </form>
 
         <input id="submit-button" type="submit" value="Send your reply" style="display: none;" />
       </form>
